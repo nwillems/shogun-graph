@@ -1,0 +1,18 @@
+version: "2"
+sql:
+  - engine: "sqlite"
+    queries: "queries.sql"
+    schema: "migration/db_up.sql"
+    gen:
+      go:
+        package: "queries"
+        out: "shogun/queries"
+        overrides:
+          - column: "nodes.properties"
+            go_type:
+              import: "encoding/json"
+              type: RawMessage
+          - column: "edges.properties"
+            go_type:
+              import: "encoding/json"
+              type: RawMessage
