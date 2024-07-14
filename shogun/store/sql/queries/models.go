@@ -5,15 +5,14 @@
 package queries
 
 import (
-	"database/sql"
 	"encoding/json"
 )
 
 type Edge struct {
 	ID         int64
-	Fst        int64
-	Snd        int64
-	Type       sql.NullString
+	Source     int64
+	Target     int64
+	Type       string
 	Properties json.RawMessage
 }
 

@@ -1,12 +1,12 @@
 version: "2"
 sql:
   - engine: "sqlite"
-    queries: "queries.sql"
-    schema: "migration/db_up.sql"
+    queries: "shogun/store/sql/queries.sql"
+    schema: "shogun/store/sql/migration/db_up.sql"
     gen:
       go:
         package: "queries"
-        out: "shogun/queries"
+        out: "shogun/store/sql/queries"
         overrides:
           - column: "nodes.properties"
             go_type:
