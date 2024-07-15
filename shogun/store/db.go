@@ -55,6 +55,6 @@ type Storage interface {
 
 	// Queries the graph, using the given query
 	Query(ctx context.Context, q Query) (*Graph, error)
-	// Queries a single node, returns a graph with thaht single node and it's edges(ones with the node as source)
+	// Queries a single node, returns a graph with that single node and it's edges(ones with the node as source)
 	QueryNode(ctx context.Context, id int64) (*Graph, error)
 }
