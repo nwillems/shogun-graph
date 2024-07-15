@@ -108,7 +108,7 @@ func (s *StorageImpl) Query(ctx context.Context, q store.Query) (*store.Graph, e
 }
 
 func Map[S, T any](ss []S, fs func(S) T) []T {
-	result := make([]V, len(ss))
+	result := make([]T, len(ss))
 	for i, s := range ss {
 		result[i] = fs(s)
 	}
@@ -172,5 +172,5 @@ func (s *StorageImpl) QueryNode(ctx context.Context, id int64) (*store.Graph, er
 	return &store.Graph{
 		Nodes: []store.DataNode{dataNode},
 		Edges: dataEdges,
-	}, fmt.Errorf("Not implemented")
+	}, err
 }

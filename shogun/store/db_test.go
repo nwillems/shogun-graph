@@ -72,7 +72,10 @@ func TestStorage(t *testing.T) {
 		_ = res.Scan(&src, &dst)
 		fmt.Printf("%+v -> %+v\n", src, dst)
 	}
-	fmt.Printf("%+v", res)
+	fmt.Printf("%+v\n", res)
+
+	rr, err := s.QueryNode(ctx, 1)
+	fmt.Printf("%+v\n", rr)
 
 	t.Fatal("THIS SHOULD NOT FAIL")
 }

@@ -23,6 +23,41 @@ func (q *Queries) GetNode(ctx context.Context, nodeID int64) (Node, error) {
 	return i, err
 }
 
+const getNodeEdges = `-- name: GetNodeEdges :many
+SELECT e.id, e.source, e.target, e.type, e.properties
+FROM edges e
+WHERE e.source = ?1 OR e.target = ?1
+`
+
+func (q *Queries) GetNodeEdges(ctx context.Context, nodeID int64) ([]Edge, error) {
+	rows, err := q.db.QueryContext(ctx, getNodeEdges, nodeID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Edge
+	for rows.Next() {
+		var i Edge
+		if err := rows.Scan(
+			&i.ID,
+			&i.Source,
+			&i.Target,
+			&i.Type,
+			&i.Properties,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const insertEdges = `-- name: InsertEdges :one
 INSERT INTO edges(source, target, type, properties)
 SELECT source_node.id, target_node.id, ?1, ?2

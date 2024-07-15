@@ -1,12 +1,14 @@
+
+
 -- name: GetNode :one
 SELECT n.id, n.node_name, n.properties
 FROM nodes n
 WHERE n.id = sqlc.arg('node_id');
 
--- name: GetEdgesForNode :many
+-- name: GetNodeEdges :many
 SELECT e.*
 FROM edges e
-WHERE e.source = sqlc.arg('node_id') OR e.target = sqlc.arg('node_id')
+WHERE e.source = sqlc.arg('node_id') OR e.target = sqlc.arg('node_id');
 
 -- name: InsertNodes :one
 INSERT INTO nodes(node_name, properties )
@@ -28,5 +30,5 @@ LEFT JOIN (
   WHERE tn.node_name = sqlc.arg('target')
   LIMIT 1
 ) AS target_node ON source_node.jj = target_node.jj
-RETURNING *
+RETURNING *;
 
